@@ -2,18 +2,29 @@ package fr.promeo.xaviersquest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.promeo.xaviersquest.MyGame;
 import fr.promeo.xaviersquest.helpers.FreeTypeFontHelper;
 import fr.promeo.xaviersquest.helpers.TilemapHelper;
 import fr.promeo.xaviersquest.utils.Constants;
+import jdk.internal.org.jline.terminal.MouseEvent;
 
 public class MenuScreen implements Screen {
 
@@ -24,29 +35,55 @@ public class MenuScreen implements Screen {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private MyGame game;
+    private Texture background;
+    private Button playButton;
+    private Stage stage;
 
     public MenuScreen(MyGame game) {this.game = game;}
 
     @Override
     public void show() {
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 1280, 720);
+        this.camera.setToOrtho(false, 598, 336);
         this.title = "Xavier's Quest";
-        /*this.font = FreeTypeFontHelper.FontGenerator("./fonts/m5x7.ttf", 32);
-        this.font.setColor(1f, 0f, 0f, 1f);
-        this.font.getData().setScale(2,2);*/
+        this.font = FreeTypeFontHelper.FontGenerator("./fonts/m5x7.ttf", 32);
+        this.font.setColor(1f, 0.65f, 0.01f, 1f);
+        this.font.getData().setScale(2,2);
         this.batch = game.getBatch();
 
         this.tiledMapRenderer = TilemapHelper.setupMap("./Screens/MenuPrincipal/menuprincipal.tmx", null);
+
+        this.background = new Texture("./Screens/MenuPrincipal/background.png");
+
+        stage = new Stage();
+        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
+        buttonStyle.fontColor = Color.BLUE;
+        buttonStyle.downFontColor = Color.RED;
+        buttonStyle.font = this.font;
+        playButton = new TextButton("test button", buttonStyle);
+        playButton.setSize(300, 50);
+        playButton.setPosition(100,100);
+
+        playButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });
+
+        stage.addActor(playButton);
     }
 
     @Override
     public void render(float delta) {
+        this.update();
         ScreenUtils.clear(0,0,0,1);
+        batch.begin();
+            batch.draw(background, 0, 0);
+            font.draw(batch, title, 240,286);
+        batch.end();
         tiledMapRenderer.render();
-        //batch.begin();
-        //font.draw(batch, title, 100,100);
-        //batch.end();
+        stage.draw();
     }
 
     @Override
