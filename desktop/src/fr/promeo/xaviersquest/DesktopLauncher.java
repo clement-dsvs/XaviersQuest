@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("XaviersQuest");
-		config.setWindowedMode(1920, 1080);
+		config.setWindowedMode(1280, 720);
 		new Lwjgl3Application(new MyGame(), config);
 	}
 }
