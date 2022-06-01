@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.batch = game.getBatch();
         this.tilemapHelper = new TilemapHelper(this);
-        this.orthogonalTiledMapRenderer = tilemapHelper.setupMap("map.tmx");
+        this.orthogonalTiledMapRenderer = tilemapHelper.setupMap("./maps/map.tmx");
     }
 
     @Override
