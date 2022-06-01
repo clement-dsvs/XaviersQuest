@@ -1,5 +1,6 @@
 package fr.promeo.xaviersquest.helpers;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -18,24 +19,16 @@ import fr.promeo.xaviersquest.utils.Constants;
 
 
 public class TilemapHelper {
-
-    private TiledMap tiledMap;
-    private GameScreen game;
-
-    public TilemapHelper(GameScreen game) {
-        this.game = game;
-    }
-
-    public OrthogonalTiledMapRenderer setupMap(String fileName) {
-        tiledMap = new TmxMapLoader().load(fileName);
-        //parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
+    public static OrthogonalTiledMapRenderer setupMap(String fileName, GameScreen game) {
+        TiledMap tiledMap = new TmxMapLoader().load(fileName);
+        if(game != null) parseMapObjects(tiledMap.getLayers().get("objects").getObjects(), game);
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
-    private void parseMapObjects(MapObjects mapObjects) {
+    private static void parseMapObjects(MapObjects mapObjects, GameScreen game) {
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
-                createStaticBody((PolygonMapObject) mapObject);
+                createStaticBody((PolygonMapObject) mapObject, game);
             }
 
             if (mapObject instanceof RectangleMapObject) {
@@ -56,7 +49,7 @@ public class TilemapHelper {
         }
     }
 
-    private void createStaticBody(PolygonMapObject polygonMapObject) {
+    private static void createStaticBody(PolygonMapObject polygonMapObject, GameScreen game) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = game.getWorld().createBody(bodyDef);
@@ -66,7 +59,7 @@ public class TilemapHelper {
         shape.dispose();
     }
 
-    private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
+    private static Shape createPolygonShape(PolygonMapObject polygonMapObject) {
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
 

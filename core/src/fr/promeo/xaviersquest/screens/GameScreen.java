@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.promeo.xaviersquest.MyGame;
 import fr.promeo.xaviersquest.helpers.TilemapHelper;
-import sun.font.TrueTypeFont;
+import fr.promeo.xaviersquest.objects.entitites.Player;
 
 public class GameScreen implements Screen {
 
@@ -22,9 +22,9 @@ public class GameScreen implements Screen {
     private MyGame game;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private TilemapHelper tilemapHelper;
 
     //game objects
+    private Player player;
 
     public GameScreen(MyGame game){
         this.game = game;
@@ -37,8 +37,7 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0, 0), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.batch = game.getBatch();
-        this.tilemapHelper = new TilemapHelper(this);
-        this.orthogonalTiledMapRenderer = tilemapHelper.setupMap("./maps/mainmap/mainmap.tmx");
+        this.orthogonalTiledMapRenderer = TilemapHelper.setupMap("./maps/mainmap/mainmap.tmx", null);
     }
 
     @Override
