@@ -28,7 +28,7 @@ public class TilemapHelper {
 
     public OrthogonalTiledMapRenderer setupMap(String fileName) {
         tiledMap = new TmxMapLoader().load(fileName);
-        parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
+        //parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
