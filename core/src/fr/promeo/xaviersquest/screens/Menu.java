@@ -29,6 +29,7 @@ public class Menu extends ApplicationAdapter {
         menuItems = new String[] {
             "Jouer",
             "Paramètre",
+            "Crédit",
             "Quitter"
         };
 
