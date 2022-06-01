@@ -61,6 +61,7 @@ public class TilemapHelper {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = game.getWorld().createBody(bodyDef);
         Shape shape = createPolygonShape(polygonMapObject);
+
         body.createFixture(shape, 1000);
         shape.dispose();
     }
