@@ -3,8 +3,6 @@ package fr.promeo.xaviersquest.objects.entitites;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import java.lang.reflect.Array;
-
 public abstract class GameEntity {
 
     protected float x, y, velX, velY, speed, _acc, _dcc;

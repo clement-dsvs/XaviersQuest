@@ -1,6 +1,7 @@
 package fr.promeo.xaviersquest;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.promeo.xaviersquest.screens.GameScreen;
@@ -22,6 +23,10 @@ public class MyGame extends Game {
 
 	public SpriteBatch getBatch() {
 		return this.batch;
+	}
+
+	public void exitGame(){
+		Gdx.app.exit();
 	}
 
 }
