@@ -55,19 +55,21 @@ public class MenuScreen implements Screen {
 
         this.background = new Texture("./Screens/MenuPrincipal/background.png");
 
-        stage = new Stage();
+        this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.fontColor = Color.BLUE;
         buttonStyle.downFontColor = Color.RED;
         buttonStyle.font = this.font;
-        playButton = new TextButton("test button", buttonStyle);
+        playButton = new TextButton("play button", buttonStyle);
         playButton.setSize(300, 50);
-        playButton.setPosition(100,100);
+        playButton.setPosition(95,500);
 
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button Pressed");
+                game.updateScreen(new GameScreen(game));
             }
         });
 
@@ -79,7 +81,7 @@ public class MenuScreen implements Screen {
         this.update();
         ScreenUtils.clear(0,0,0,1);
         batch.begin();
-            batch.draw(background, 0, 0);
+            batch.draw(background, 110, 0);
             font.draw(batch, title, 240,286);
         batch.end();
         tiledMapRenderer.render();
