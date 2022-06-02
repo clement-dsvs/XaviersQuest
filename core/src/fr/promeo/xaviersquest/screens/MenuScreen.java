@@ -30,7 +30,7 @@ public class MenuScreen implements Screen {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private String title;
+    private Texture title;
     private BitmapFont font;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -45,7 +45,7 @@ public class MenuScreen implements Screen {
     public void show() {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 598, 336);
-        this.title = "Xavier's Quest";
+
         this.font = FreeTypeFontHelper.FontGenerator("./fonts/m5x7.ttf", 32);
         this.font.setColor(1f, 0.65f, 0.01f, 1f);
         this.font.getData().setScale(2,2);
@@ -53,21 +53,24 @@ public class MenuScreen implements Screen {
 
         this.tiledMapRenderer = TilemapHelper.setupMap("./Screens/MenuPrincipal/menuprincipal.tmx", null);
 
-        this.background = new Texture("./Screens/MenuPrincipal/background.png");
+        this.background = new Texture("./Screens/MenuPrincipal/background2.jpg");
+        this.title = new Texture("./Screens/MenuPrincipal/title.png");
 
-        stage = new Stage();
+        this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
         buttonStyle.fontColor = Color.BLUE;
         buttonStyle.downFontColor = Color.RED;
         buttonStyle.font = this.font;
-        playButton = new TextButton("test button", buttonStyle);
+        playButton = new TextButton("play button", buttonStyle);
         playButton.setSize(300, 50);
-        playButton.setPosition(100,100);
+        playButton.setPosition(95,500);
 
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button Pressed");
+                game.updateScreen(new GameScreen(game));
             }
         });
 
@@ -80,7 +83,7 @@ public class MenuScreen implements Screen {
         ScreenUtils.clear(0,0,0,1);
         batch.begin();
             batch.draw(background, 0, 0);
-            font.draw(batch, title, 240,286);
+            batch.draw(title, 180, 160, 400, 120);
         batch.end();
         tiledMapRenderer.render();
         stage.draw();
