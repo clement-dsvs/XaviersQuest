@@ -16,9 +16,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import fr.promeo.xaviersquest.MyGame;
 import fr.promeo.xaviersquest.helpers.FreeTypeFontHelper;
@@ -37,6 +39,9 @@ public class MenuScreen implements Screen {
     private MyGame game;
     private Texture background;
     private Button playButton;
+    private Button settingsButton;
+    private Button creditsButton;
+    private Button exitButton;
     private Stage stage;
 
     public MenuScreen(MyGame game) {this.game = game;}
@@ -58,35 +63,65 @@ public class MenuScreen implements Screen {
 
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.fontColor = Color.BLUE;
-        buttonStyle.downFontColor = Color.RED;
-        buttonStyle.font = this.font;
-        playButton = new TextButton("play button", buttonStyle);
-        playButton.setSize(300, 50);
-        playButton.setPosition(95,500);
 
+        playButton = new ImageButton(new TextureRegionDrawable(new Texture("./skins/buttons/glassy.png")));
+        playButton.setPosition(75, 470);
+        playButton.setWidth(230);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
                 game.updateScreen(new GameScreen(game));
             }
         });
 
+        settingsButton = new ImageButton(new TextureRegionDrawable(new Texture("./skins/buttons/glassy.png")));
+        settingsButton.setPosition(75, 335);
+        settingsButton.setWidth(230);
+        settingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                game.updateScreen(new GameScreen(game));
+            }
+        });
+
+        creditsButton = new ImageButton(new TextureRegionDrawable(new Texture("./skins/buttons/glassy.png")));
+        creditsButton.setPosition(75, 200);
+        creditsButton.setWidth(230);
+        creditsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                game.updateScreen(new GameScreen(game));
+            }
+        });
+
+        exitButton = new ImageButton(new TextureRegionDrawable(new Texture("./skins/buttons/glassy.png")));
+        exitButton.setPosition(75, 65);
+        exitButton.setWidth(230);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                game.exitGame();
+            }
+        });
+
+
+
         stage.addActor(playButton);
+        stage.addActor(settingsButton);
+        stage.addActor(creditsButton);
+        stage.addActor(exitButton);
     }
 
     @Override
     public void render(float delta) {
         this.update();
         ScreenUtils.clear(0,0,0,1);
+        stage.draw();
         batch.begin();
-            batch.draw(background, 0, 0);
-            batch.draw(title, 180, 160, 400, 120);
+        batch.draw(background, 0, 0);
+        batch.draw(title, 180, 160, 400, 120);
         batch.end();
         tiledMapRenderer.render();
-        stage.draw();
     }
 
     @Override
