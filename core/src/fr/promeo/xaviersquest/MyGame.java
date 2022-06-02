@@ -16,6 +16,7 @@ public class MyGame extends Game {
 	}
 
 	public void updateScreen(Screen screen) {
+		this.screen.dispose();
 		this.setScreen(screen);
 	}
 

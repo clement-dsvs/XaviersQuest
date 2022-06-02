@@ -1,5 +1,7 @@
 package fr.promeo.xaviersquest.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,7 +28,7 @@ public class GameScreen implements Screen {
     //game objects
     private Player player;
 
-    public GameScreen(MyGame game){
+    public GameScreen(MyGame game) {
         this.game = game;
     }
 
@@ -73,15 +75,18 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        world.dispose();
+        orthogonalTiledMapRenderer.dispose();
+        box2DDebugRenderer.dispose();
     }
 
     private void update() {
         world.step(1 / 60f, 6, 2);
         this.cameraUpdate();
+        this.handleInput();
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
-
     }
 
     private void cameraUpdate() {
@@ -92,6 +97,12 @@ public class GameScreen implements Screen {
 
     public World getWorld() {
         return world;
+    }
+
+    private void handleInput() {
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            game.setScreen(new MenuScreen(game));
+        }
     }
 
 }
