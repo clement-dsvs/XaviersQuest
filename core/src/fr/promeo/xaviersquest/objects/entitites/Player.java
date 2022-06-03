@@ -7,13 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import fr.promeo.xaviersquest.helpers.AnimationHelper;
 import fr.promeo.xaviersquest.utils.Constants;
 
 public class Player extends GameEntity {
 
     private Texture img;
     private TextureRegion[] animationFrames;
-    private Animation animation;
+    private Animation idleAnimation;
+    private Animation runRightAnimation;
+    private Animation runLeftAnimation;
+    private Animation currentAnimation;
     private float stateTime;
 
     public Player(float width, float height, Body body) {
@@ -22,19 +26,11 @@ public class Player extends GameEntity {
         this._acc = 1f;
         this._dcc = 0.5f;
 
-        img = new Texture("./skins/player/idle-sprite.png");
-        TextureRegion[][] tmpFrames = TextureRegion.split(img, 64, 64);
-        animationFrames = new TextureRegion[4];
 
-        int index = 0;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                animationFrames[index++] = tmpFrames[i][j];
-            }
-        }
 
-        animation = new Animation(1f/3f, animationFrames);
-
+        idleAnimation = AnimationHelper.generateAnimation("./skins/player/idle-sprite.png", 4, 64,64, 1f/3f);
+        runRightAnimation = AnimationHelper.generateAnimation("./skins/player/run-sprite.png", 10, 64,64, 1f/10f);
+        runLeftAnimation = AnimationHelper.generateAnimation("./skins/player/run-left-sprite.png", 10, 64,64, 1f/10f);
     }
 
     @Override
@@ -43,12 +39,13 @@ public class Player extends GameEntity {
         y = body.getPosition().y * Constants.PPM;
 
         checkUserInput();
+        updateAnimation();
     }
 
     @Override
     public void render(SpriteBatch spriteBatch, float delta) {
         stateTime += delta;
-        TextureRegion animationFrame = (TextureRegion) animation.getKeyFrame(stateTime, true);
+        TextureRegion animationFrame = (TextureRegion) currentAnimation.getKeyFrame(stateTime, true);
         spriteBatch.draw(animationFrame, x - 128, y - 128, 256, 256);
     }
 
@@ -73,6 +70,16 @@ public class Player extends GameEntity {
         velY = clamp(velY, 3, -3);
 
         body.setLinearVelocity(velX * speed, velY * speed);
+    }
+
+    private void updateAnimation() {
+        if (velX > 0 || velY != 0) {
+            currentAnimation = runRightAnimation;
+        } if (velX < 0) {
+            currentAnimation = runLeftAnimation;
+        } if (velX == 0 && velY == 0) {
+            currentAnimation = idleAnimation;
+        }
     }
 
     private float clamp(float value, float max, float min) {
