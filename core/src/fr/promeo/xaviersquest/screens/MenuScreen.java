@@ -43,7 +43,9 @@ public class MenuScreen implements Screen {
     private Button exitButton;
     private Stage stage;
 
-    public MenuScreen(MyGame game) {this.game = game;}
+    public MenuScreen(MyGame game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -52,7 +54,7 @@ public class MenuScreen implements Screen {
 
         this.font = FreeTypeFontHelper.FontGenerator("./fonts/m5x7.ttf", 32);
         this.font.setColor(1f, 0.65f, 0.01f, 1f);
-        this.font.getData().setScale(2,2);
+        this.font.getData().setScale(2, 2);
         this.batch = game.getBatch();
 
         this.tiledMapRenderer = TilemapHelper.setupMap("./Screens/MenuPrincipal/menuprincipal.tmx", null);
@@ -68,8 +70,8 @@ public class MenuScreen implements Screen {
         playButton.setWidth(230);
         playButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                game.updateScreen(new GameScreen(game));
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(new GameScreen(game));
             }
         });
 
@@ -78,8 +80,8 @@ public class MenuScreen implements Screen {
         settingsButton.setWidth(230);
         settingsButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                game.updateScreen(new GameScreen(game));
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(new GameScreen(game));
             }
         });
 
@@ -88,8 +90,8 @@ public class MenuScreen implements Screen {
         creditsButton.setWidth(230);
         creditsButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                game.updateScreen(new GameScreen(game));
+            public void changed(ChangeEvent event, Actor actor) {
+                game.changeScreen(new GameScreen(game));
             }
         });
 
@@ -98,12 +100,10 @@ public class MenuScreen implements Screen {
         exitButton.setWidth(230);
         exitButton.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
                 game.exitGame();
             }
         });
-
-
 
         stage.addActor(playButton);
         stage.addActor(settingsButton);
@@ -114,7 +114,7 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         this.update();
-        ScreenUtils.clear(0,0,0,1);
+        ScreenUtils.clear(0, 0, 0, 1);
         stage.draw();
         batch.begin();
         batch.draw(background, 0, 0);

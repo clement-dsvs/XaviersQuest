@@ -105,7 +105,7 @@ public class GameScreen implements Screen {
 
     private void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            game.setScreen(new MenuScreen(game));
+            game.changeScreen(new MenuScreen(game));
         }
     }
 
