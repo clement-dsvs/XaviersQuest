@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import fr.promeo.xaviersquest.screens.GameScreen;
 import fr.promeo.xaviersquest.screens.MenuScreen;
 
 public class MyGame extends Game {
