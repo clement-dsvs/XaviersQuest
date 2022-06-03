@@ -6,8 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.promeo.xaviersquest.screens.MenuScreen;
 
+import java.util.Stack;
+
 public class MyGame extends Game {
 	SpriteBatch batch;
+	Screen screen;
 	
 	@Override
 	public void create () {
@@ -15,8 +18,7 @@ public class MyGame extends Game {
 		this.setScreen(new MenuScreen(this));
 	}
 
-	public void updateScreen(Screen screen) {
-		this.screen.dispose();
+	public void changeScreen(Screen screen) {
 		this.setScreen(screen);
 	}
 
