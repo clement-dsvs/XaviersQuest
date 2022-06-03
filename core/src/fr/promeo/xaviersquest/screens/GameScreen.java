@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0, 0), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.batch = game.getBatch();
-        this.orthogonalTiledMapRenderer = TilemapHelper.setupMap("./maps/mainmap/mainmap.tmx", null);
+        this.orthogonalTiledMapRenderer = TilemapHelper.setupMap("./maps/mainmap/mainmap.tmx", this);
     }
 
     @Override
@@ -49,6 +49,7 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.render();
         batch.begin();
         //render objects
+        player.render(batch, delta);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
 
     private void update() {
         world.step(1 / 60f, 6, 2);
+        player.update();
         this.cameraUpdate();
         this.handleInput();
         batch.setProjectionMatrix(camera.combined);
@@ -91,6 +93,8 @@ public class GameScreen implements Screen {
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
+        position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
+        position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
         this.camera.position.set(position);
         camera.update();
     }
@@ -103,6 +107,10 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             game.setScreen(new MenuScreen(game));
         }
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
     }
 
 }

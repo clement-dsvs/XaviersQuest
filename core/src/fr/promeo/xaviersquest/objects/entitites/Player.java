@@ -2,16 +2,39 @@ package fr.promeo.xaviersquest.objects.entitites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import fr.promeo.xaviersquest.utils.Constants;
 
 public class Player extends GameEntity {
+
+    private Texture img;
+    private TextureRegion[] animationFrames;
+    private Animation animation;
+    private float stateTime;
+
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 4f;
         this._acc = 1f;
         this._dcc = 0.5f;
+
+        img = new Texture("./skins/player/idle-sprite.png");
+        TextureRegion[][] tmpFrames = TextureRegion.split(img, 64, 64);
+        animationFrames = new TextureRegion[4];
+
+        int index = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                animationFrames[index++] = tmpFrames[i][j];
+            }
+        }
+
+        animation = new Animation(1f/3f, animationFrames);
+
     }
 
     @Override
@@ -23,7 +46,10 @@ public class Player extends GameEntity {
     }
 
     @Override
-    public void render(SpriteBatch spriteBatch) {
+    public void render(SpriteBatch spriteBatch, float delta) {
+        stateTime += delta;
+        TextureRegion animationFrame = (TextureRegion) animation.getKeyFrame(stateTime, true);
+        spriteBatch.draw(animationFrame, x - 128, y - 128, 256, 256);
     }
 
     private void checkUserInput() {

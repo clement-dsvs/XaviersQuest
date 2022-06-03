@@ -34,7 +34,6 @@ public class MenuScreen implements Screen {
     private SpriteBatch batch;
     private Texture title;
     private BitmapFont font;
-    private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private MyGame game;
     private Texture background;

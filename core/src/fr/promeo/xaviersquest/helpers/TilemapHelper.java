@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+import fr.promeo.xaviersquest.objects.entitites.Player;
 import fr.promeo.xaviersquest.screens.GameScreen;
 import fr.promeo.xaviersquest.utils.Constants;
 
@@ -43,7 +44,7 @@ public class TilemapHelper {
                             false,
                             game.getWorld()
                     );
-                    //game.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+                    game.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
                 }
             }
         }
