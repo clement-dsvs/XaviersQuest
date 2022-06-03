@@ -63,5 +63,6 @@ project(":core") {
         implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:1.8.0"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-ai:1.8.1"
     }
 }

@@ -15,10 +15,12 @@ public class Player extends GameEntity {
     private Texture img;
     private TextureRegion[] animationFrames;
     private Animation idleAnimation;
+    private Animation idleLeftAnimation;
     private Animation runRightAnimation;
     private Animation runLeftAnimation;
     private Animation currentAnimation;
     private float stateTime;
+    private boolean isLookingRight;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -29,6 +31,7 @@ public class Player extends GameEntity {
 
 
         idleAnimation = AnimationHelper.generateAnimation("./skins/player/idle-sprite.png", 4, 64,64, 1f/3f);
+        idleLeftAnimation = AnimationHelper.generateAnimation("./skins/player/idle-left-sprite.png", 4, 64,64, 1f/3f);
         runRightAnimation = AnimationHelper.generateAnimation("./skins/player/run-sprite.png", 10, 64,64, 1f/10f);
         runLeftAnimation = AnimationHelper.generateAnimation("./skins/player/run-left-sprite.png", 10, 64,64, 1f/10f);
     }
@@ -37,6 +40,9 @@ public class Player extends GameEntity {
     public void update() {
         x = body.getPosition().x * Constants.PPM;
         y = body.getPosition().y * Constants.PPM;
+
+        if(velX > 0) isLookingRight = true;
+        else if (velX < 0) isLookingRight = false;
 
         checkUserInput();
         updateAnimation();
@@ -78,7 +84,7 @@ public class Player extends GameEntity {
         } if (velX < 0) {
             currentAnimation = runLeftAnimation;
         } if (velX == 0 && velY == 0) {
-            currentAnimation = idleAnimation;
+            currentAnimation = isLookingRight ? idleAnimation : idleLeftAnimation;
         }
     }
 
