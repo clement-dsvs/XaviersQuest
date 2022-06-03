@@ -1,31 +1,33 @@
 package fr.promeo.xaviersquest;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import fr.promeo.xaviersquest.screens.MenuScreen;
 
-public class MyGame extends ApplicationAdapter {
+import java.util.Stack;
+
+public class MyGame extends Game {
 	SpriteBatch batch;
-	Texture img;
+	Screen screen;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		this.setScreen(new MenuScreen(this));
 	}
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void changeScreen(Screen screen) {
+		this.setScreen(screen);
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
+	public SpriteBatch getBatch() {
+		return this.batch;
 	}
+
+	public void exitGame(){
+		Gdx.app.exit();
+	}
+
 }
