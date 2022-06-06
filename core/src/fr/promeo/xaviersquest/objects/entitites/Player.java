@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import fr.promeo.xaviersquest.helpers.AnimationHelper;
 import fr.promeo.xaviersquest.utils.Constants;
 
 public class Player extends GameEntity {
 
-    private Texture img;
-    private TextureRegion[] animationFrames;
     private Animation idleAnimation;
     private Animation idleLeftAnimation;
     private Animation runRightAnimation;
@@ -28,12 +27,11 @@ public class Player extends GameEntity {
         this._acc = 1f;
         this._dcc = 0.5f;
 
-
-
         idleAnimation = AnimationHelper.generateAnimation("./skins/player/idle-sprite.png", 4, 64,64, 1f/3f);
         idleLeftAnimation = AnimationHelper.generateAnimation("./skins/player/idle-left-sprite.png", 4, 64,64, 1f/3f);
         runRightAnimation = AnimationHelper.generateAnimation("./skins/player/run-sprite.png", 10, 64,64, 1f/10f);
         runLeftAnimation = AnimationHelper.generateAnimation("./skins/player/run-left-sprite.png", 10, 64,64, 1f/10f);
+        this.currentAnimation = idleLeftAnimation;
     }
 
     @Override
@@ -91,5 +89,10 @@ public class Player extends GameEntity {
     private float clamp(float value, float max, float min) {
         if (value >= max) return max;
         return Math.max(value, min);
+    }
+
+    public void setPosition(Vector2 position){
+        this.x = position.x;
+        this.y = position.y;
     }
 }

@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import fr.promeo.xaviersquest.MyGame;
 import fr.promeo.xaviersquest.helpers.TilemapHelper;
 import fr.promeo.xaviersquest.objects.entitites.Player;
+import fr.promeo.xaviersquest.objects.entitites.Skeleton;
+import fr.promeo.xaviersquest.objects.listeners.CollisionListener;
 
 public class GameScreen implements Screen {
 
@@ -27,6 +29,7 @@ public class GameScreen implements Screen {
 
     //game objects
     private Player player;
+    private Skeleton ennemy;
 
     public GameScreen(MyGame game) {
         this.game = game;
@@ -37,6 +40,7 @@ public class GameScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 1920, 1080);
         this.world = new World(new Vector2(0, 0), false);
+        this.world.setContactListener(new CollisionListener(this));
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.batch = game.getBatch();
         this.orthogonalTiledMapRenderer = TilemapHelper.setupMap("./maps/mainmap/mainmap.tmx", this);
@@ -112,5 +116,9 @@ public class GameScreen implements Screen {
     public void setPlayer(Player player){
         this.player = player;
     }
+
+    public Player getPlayer(){return this.player;}
+
+    public void setEnnemy(Skeleton skeleton){this.ennemy = skeleton;}
 
 }
