@@ -17,6 +17,7 @@ public abstract class GameEntity {
         this.velX = 0;
         this.velY = 0;
         this.body = body;
+        this.body.setUserData(this);
     }
 
     public abstract void update();
