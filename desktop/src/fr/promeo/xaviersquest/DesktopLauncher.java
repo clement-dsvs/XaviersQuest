@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("XaviersQuest");
+		config.setTitle("Xavier's Quest");
 		config.setWindowedMode(1280, 720);
 		config.setWindowIcon("./icon.png");
 		new Lwjgl3Application(new MyGame(), config);
